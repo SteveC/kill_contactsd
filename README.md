@@ -69,3 +69,35 @@ To run the script automatically every minute using cron, you can add the followi
     *(Note: You might need to use the full path to `kill_contactsd.sh` depending on how cron's environment is configured)*
 
 3.  Save and close the editor. Cron will now execute the script once every minute using the `--run-once` flag.
+
+## Sample Output
+
+Here is an example of the script running in continuous monitoring mode:
+
+```bash
+% ./kill_contactsd.sh  
+Starting contactsd monitor. Checking every 60 seconds while on battery.
+Fri Apr 11 11:04:57 MDT 2025: Process contactsd (PID: 742) is using 0.0% CPU; within limits.
+Fri Apr 11 11:04:57 MDT 2025: Process contactsd (PID: 851) is using 0.0% CPU; within limits.
+Fri Apr 11 11:05:57 MDT 2025: Process contactsd (PID: 742) is using 0.0% CPU; within limits.
+Fri Apr 11 11:05:57 MDT 2025: Process contactsd (PID: 851) is using 0.0% CPU; within limits.
+Fri Apr 11 11:06:58 MDT 2025: Process contactsd (PID: 742) is using 0.0% CPU; within limits.
+Fri Apr 11 11:06:58 MDT 2025: Process contactsd (PID: 851) is using 0.0% CPU; within limits.
+Fri Apr 11 11:07:58 MDT 2025: Process contactsd (PID: 742) is using 0.0% CPU; within limits.
+Fri Apr 11 11:07:58 MDT 2025: Process contactsd (PID: 851) is using 0.0% CPU; within limits.
+Fri Apr 11 11:08:58 MDT 2025: Process contactsd (PID: 742) is using 0.0% CPU; within limits.
+Fri Apr 11 11:08:58 MDT 2025: Process contactsd (PID: 851) is using 0.0% CPU; within limits.
+Fri Apr 11 11:09:58 MDT 2025: Process contactsd (PID: 742) is using 0.0% CPU; within limits.
+Fri Apr 11 11:09:58 MDT 2025: Process contactsd (PID: 851) is using 0.0% CPU; within limits.
+Fri Apr 11 11:10:58 MDT 2025: Process contactsd (PID: 742) is using 79.9% CPU. Killing it...
+Fri Apr 11 11:10:58 MDT 2025: Process contactsd (PID: 851) is using 7.3% CPU; within limits.
+```
+
+**Explanation:**
+
+*   The script starts in monitoring mode, checking every 60 seconds.
+*   It identifies two `contactsd` processes (PIDs 742 and 851).
+*   For several minutes, both processes are using minimal CPU, remaining within the limits.
+*   At 11:10:58, process 742's CPU usage jumps to 79.9%, exceeding the 50% threshold.
+*   The script kills process 742.
+*   Process 851 remains running as its CPU usage (7.3%) is within limits.
